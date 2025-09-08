@@ -6,13 +6,16 @@ import {Auth} from "@supabase/auth-ui-react";
 
 const Login = () => {
     return (
-        <div className="supabase-auth">
-            <Auth
-                supabaseClient={supabaseClient}
-                appearance={{theme: ThemeSupa}}
-                providers={["google"]}
-                onlyThirdPartyProviders={true}
-            />
+        <div className="login">
+            <div className="supabase-auth">
+                <Auth
+                    supabaseClient={supabaseClient}
+                    appearance={{theme: ThemeSupa}}
+                    providers={["google"]}
+                    onlyThirdPartyProviders={true}
+                    redirectTo={window.location.origin + "/profile"}
+                />
+            </div>
         </div>
     )
 }
