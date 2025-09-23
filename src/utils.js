@@ -35,7 +35,6 @@ export const ifNotVendorRedirect = async (session, navigate) => {
         console.error(error);
         return;
     }
-    console.log(data);
     if (!data || data.length === 0) {
         await supabaseClient.auth.signOut();
         navigate("/unauthorized");
@@ -142,9 +141,10 @@ export const getAllShopImages = async () => {
 }
 
 export const getShopInfo = async (shopId) => {
-    const shopData = await getShop(shopId);
-    const shopImages = await getShopImages(shopId);
-    return {...shopData, ...shopImages};
+    const shopData = await getShop(shopId) ;
+    if (shopData === null) return null;
+    const shopImages = await getShopImages(shopId) ;
+    return {...shopData , ...shopImages };
 }
 
 export const getAllVendors = async () => {
@@ -169,7 +169,6 @@ export const getMenuItems = async (menuId) => {
         return [];
     }
     if (!data || data.length === 0) return [];
-    console.log(data);
     return data;
 }
 

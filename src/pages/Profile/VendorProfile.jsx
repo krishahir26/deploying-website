@@ -28,7 +28,6 @@ const VendorProfile = () => {
     useEffect(() => {
         getShopInfo(shopId).then(info => setShopInfo(info)).catch(console.error);
     }, [shopId]);
-    
     if (!session || shopInfo === undefined) return (<p>Loading...</p>);
     if (shopId === null) return (<VendorProfileWithoutShop vendorId={vendorId}/>); // if no shop show shop setup form
     else return (<VendorProfileWithShop shopId={shopId} shopInfo={shopInfo}/>);
