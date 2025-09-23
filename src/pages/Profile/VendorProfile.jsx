@@ -18,6 +18,7 @@ const VendorProfile = () => {
     }, [navigate, session]);
     
     useEffect(() => {
+        if (!session) return;
         vendorHasShop(session).then(({shop_id, vendor_id}) => {
             setShopId(shop_id);
             setVendorId(vendor_id)
