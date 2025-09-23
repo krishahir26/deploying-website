@@ -11,6 +11,7 @@ import Unauthorized from "./pages/Error/Unauthorized";
 import Profile from "./pages/Profile/Profile";
 import VendorProfile from "./pages/Profile/VendorProfile";
 import AdminProfile from "./pages/Profile/AdminProfile";
+import IndividualRestaurant from "./pages/Restaurants/IndividualRestaurant";
 
 function App() {
     return (
@@ -25,6 +26,7 @@ function App() {
                     <Route path="/admin-login" element={<AdminLogin/>}/>
 
                     <Route path="/restaurants" element={<Restaurants/>}/>
+                    <Route path="/restaurants/:shopId" element={<IndividualRestaurant/>}/>
 
                     <Route path="/profile" element={<Profile/>}/>
                     <Route path="/vendor-profile" element={<VendorProfile/>}/>

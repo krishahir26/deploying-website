@@ -1,36 +1,27 @@
 import "./Restaurants.css"
 import {useEffect, useState} from "react";
-import {supabaseClient} from "../../utils.js";
+import {getAllShopImages} from "../../utils.js";
 
 const Restaurants = () => {
-    const [restaurants, setRestaurants] = useState([]);
+    const [shopImages, setShopImages] = useState(undefined);
     useEffect(() => {
-        supabaseClient
-            .from("shops")
-            .select("id, name, description")
-            .then((res) => {
-                if (res.error) {
-                    // tell user there was an error while processing this request
-                } else {
-                    setRestaurants(res.data);
-                }
-            })
-    })
-    if (restaurants.length === 0) {
+        if (shopImages) return;
+        getAllShopImages().then(res => setShopImages(res)).catch(console.error);
+    }, [shopImages])
+    if (!shopImages) return (<h1>Loading...</h1>);
+    if (shopImages.length === 0) {
         return (
             <div className="restaurants">
                 No restaurants found!
             </div>
         )
-    } else {
-        return (
-            <div className="restaurants">
-                <pre>{JSON.stringify(restaurants, null, 2)}</pre>
-            </div>
-        )
     }
-
-    // else return <div>lol</div>
+    let res = undefined;
+    for (const shopImage of shopImages) {
+        // todo: build the list of restaurants with pretty tiles
+        console.log(shopImage);
+    }
+    return res;
 }
 
 export default Restaurants

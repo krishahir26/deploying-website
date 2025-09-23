@@ -1,24 +1,30 @@
 import "./AdminProfile.css"
-import {getAllVendors, supabaseClient, useSession} from "../../utils.js";
+import {getAllVendors, ifNotAdminRedirect, sha256sum, supabaseClient, useSession} from "../../utils.js";
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const AdminProfile = () => {
     const session = useSession();
-    const [vendors, setVendors] = useState(null);
+    const navigate = useNavigate();
+    const [vendors, setVendors] = useState(undefined);
     const [email, setEmail] = useState("");
     useEffect(() => {
         if (!session) return;
+        ifNotAdminRedirect(session, navigate).catch(console.error);
+    }, [navigate, session]);
+    useEffect(() => {
         getAllVendors().then(v => setVendors(v)).catch(console.error);
-    }, [session]);
+    }, []);
+    if (!session) return (<p>Loading...</p>);
     let res;
     if (vendors === null) res = (
-        <div>there are no vendors on ts<br/></div>); else res = JSON.stringify(vendors, null, 2);
+        <div>there are no vendors on ts<br/></div>); else res = (
+        <pre><code>{JSON.stringify(vendors, null, 2)}</code></pre>);
     const insertVendor = async (e) => {
         e.preventDefault();
-        if (email === "") return;
         const {error,} = await supabaseClient
             .from("vendors")
-            .insert({vendor_id: btoa(email), email: email, shop_id: null});
+            .insert({vendor_id: sha256sum(email), email: email, shop_id: null});
         if (error) {
             console.error(error);
             res = (
@@ -29,7 +35,8 @@ const AdminProfile = () => {
         }
         location.reload();
     }
-    return (
+    // necessary to check if the session is valid
+    if (session) return (
         <div className="admin-profile">
             {res}
             <form className="vendor-form" onSubmit={insertVendor}>

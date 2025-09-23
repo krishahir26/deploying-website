@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import "./VendorLogin.css"
 import {ThemeSupa} from "@supabase/auth-ui-shared";
-import {isVendor, supabaseClient, useSession} from "../../utils.js";
+import {ifNotVendorRedirect, supabaseClient, useSession} from "../../utils.js";
 import {Auth} from "@supabase/auth-ui-react";
 import {useNavigate} from "react-router-dom";
 
@@ -10,7 +10,7 @@ const VendorLogin = () => {
     const navigate = useNavigate();
     useEffect(() => {
         if (!session) return;
-        isVendor(session, navigate).then().catch(console.error);
+        ifNotVendorRedirect(session, navigate).catch(console.error);
     }, [navigate, session]);
     if (session === undefined) return (<p>Loading...</p>);
     if (session === null) return (

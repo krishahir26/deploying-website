@@ -1,5 +1,5 @@
 import "./AdminLogin.css"
-import {isSuperAdmin, supabaseClient, useSession} from "../../utils.js";
+import {supabaseClient, useSession, ifNotAdminRedirect} from "../../utils.js";
 import {useNavigate} from "react-router-dom";
 import React, {useEffect} from "react";
 import {Auth} from "@supabase/auth-ui-react";
@@ -10,7 +10,7 @@ const AdminLogin = () => {
     const navigate = useNavigate();
     useEffect(() => {
         if (!session) return;
-        isSuperAdmin(session, navigate).then().catch(console.error);
+        ifNotAdminRedirect(session).catch(console.error);
     }, [navigate, session]);
     if (session === undefined) return (<p>Loading...</p>);
     if (session === null) return (
@@ -26,7 +26,7 @@ const AdminLogin = () => {
             </div>
         </div>
     )
-    return (<div>checking access...</div>)
+    return (<div>checking access...</div>);
 }
 
 export default AdminLogin;
