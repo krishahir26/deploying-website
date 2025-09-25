@@ -1,70 +1,187 @@
-.navbar { 
-    padding: 20px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.navbar {
+  width: calc(100% - 80px); /* leave 40px space on each side */
+  margin: 0 40px; /* 40px space from left and right */
+  height: 100px;
+  display: flex;
+  justify-content: space-between; /* Logo left, icons right */
+  align-items: center;
+  padding: 0.75rem 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  position: sticky;
+  top: 20px;
+  z-index: 1000;
 }
 
-.navbar .logo { 
-    width: 150px;
+.navbar-left {
+  display: flex;
+  align-items: center;
 }
 
-.navbar-menu { 
-    display: flex;
-    list-style: none;
-    gap: 20px;
-    color: #181818;
+.navbar-logo {
+  height: 80px;
+  width: auto;
+  cursor: pointer;
 }
 
-.navbar-right { 
-    display: flex;
-    align-items: center;
-    gap: 40px;
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
 }
 
-.navbar button { 
-    background: transparent;
-    font-size: 16px;
-    color: cadetblue;
-    border: 1px solid tomato;
-    padding: 10px;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: 0.3s;
+.icon {
+  width: 40px;
+  height: 90px;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.navbar button:hover { 
-    background-color: #fff4f2;
-}
-.navbar .active { 
-    padding-bottom: 2px;
-    border-bottom: 2px solid #494949;
+.icon:hover {
+  color: #4f46e5;
+  transform: translateY(-2px);
 }
 
-.navbar li { 
-    cursor: pointer;
+/* Search Container */
+.navbar-search-container {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
-.navbar-search { 
-    position: relative;
+.navbar-search-container input {
+  width: 0;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  border: 2px solid transparent;
+  outline: none;
+  opacity: 0;
+  font-size: 0.9rem;
+  background: rgba(243, 244, 246, 0.9);
+  transition: all 0.3s ease;
+  order: -1; /* input comes before icon */
 }
 
-.navbar-search .dot { 
-    position: absolute;
-    min-width: 10px;
-    min-height: 10px;
-    background-color: tomato;
-    border-radius: 5px;
-    top: -8px;
-    right: -8px;
+/* Active input */
+.navbar-search-container.active input {
+  width: 180px;
+  opacity: 1;
+  border-color: #4f46e5;
+  background: white;
+  margin-right: 0.5rem;
 }
 
-.user-pfp {
-    display: inline;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
+/* Active icon highlight */
+.navbar-search-container .search-icon.active-icon {
+  color: #4f46e5;
+  transform: translateY(-2px) scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.5rem 1rem;
+  }
+
+  .navbar-search-container.active input {
+    width: 120px;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .navbar-logo {
+    height: 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-search-container.active input {
+    width: 80px;
+  }
+
+  .navbar-logo {
+    height: 30px;
+  }
+}
+
+.profile-container {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-icon {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.profile-icon.active-icon {
+  color: #4f46e5;
+  transform: scale(1.1);
+}
+
+/* Dropdown aligned to left of profile icon */
+.profile-dropdown {
+  position: absolute;
+  top: 100%; /* directly below the icon */
+  left: 0;   /* align left edge with profile icon */
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: all 0.3s ease;
+  min-width: 140px;
+  z-index: 100;
+}
+
+.profile-dropdown.open {
+  opacity: 1;
+  transform: translateY(5px); /* smooth slide down */
+  pointer-events: auto;
+}
+
+.profile-dropdown ul {
+  list-style: none;
+  padding: 0.5rem 0;
+  margin: 0;
+}
+
+.profile-dropdown li {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  color: #374151;
+  transition: all 0.2s ease;
+}
+
+.profile-dropdown li:hover {
+  background: rgba(79, 70, 229, 0.1);
+  color: #4f46e5;
+}
+
+.profile-dropdown ul li.logout-item {
+  color: #e53935; /* red */
+}
+
+.profile-dropdown ul li.logout-item:hover {
+  background-color: rgba(229, 57, 53, 0.1);
+}
+
+.logout-text {
+  color: red;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
 }

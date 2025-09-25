@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Englebert&display=swap');
 
+/* ------------------------------ Reset & Base -------------------------------- */
 * {
     padding: 0;
     margin: 0;
@@ -9,8 +10,10 @@
     font-style: normal;
 }
 
-body {
+body, html {
+    width: 100%;
     min-height: 100vh;
+    overflow-x: hidden; /* prevents horizontal scroll */
 }
 
 a {
@@ -18,11 +21,18 @@ a {
     color: inherit;
 }
 
+/* ------------------------------ App Container -------------------------------- */
 .app {
-    width: 80%;
-    margin: auto;
+    width: 100%;     /* full width */
+    height: 100%;    /* full height */
+    margin: 0;
+    padding: 0;      /* optional: you can add padding if needed */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
+/* ------------------------------ Animations -------------------------------- */
 @keyframes fadeIn {
     0% {
         opacity: 0;
