@@ -1,7 +1,7 @@
-import "./VendorProfileWithoutShop.css";
 import { sha256sum, supabaseClient } from "../../utils.js";
 import { useState } from "react";
-import "./VendorProfileWithoutShop.css";
+import "./VendorProfileWithoutShop.css"; // remove the second one
+
 
 const VendorProfileWithoutShop = ({ vendorId }) => {
   const [loading, setLoading] = useState(false);
