@@ -2,7 +2,7 @@ import "./VendorProfile.css"
 import { getShopInfo, ifNotVendorRedirect, useSession, vendorHasShop} from "../../utils";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import VendorProfileWithoutShop from "../../components/VendorProfile/VendorProfileWIthoutShop";
+import VendorProfileWithoutShop from "../../components/VendorProfile/VendorProfileWithoutShop";
 import VendorProfileWithShop from "../../components/VendorProfile/VendorProfileWithShop";
 
 const VendorProfile = () => {
