@@ -23,7 +23,7 @@ function VendorProfileWithShop({ shopId, shopInfo }) {
         const itemAvailable = form.get("item-available") === "on";
         const itemNonVeg = form.get("item-non-veg") === "on";
         const itemTime = form.get("item-time");
-        const itemId = `${shopId}:${itemName}`;
+        const itemId = crypto.randomUUID();
 
         const insertMenuItem = await supabaseClient.from("menu").insert({
             menu_id: menuId,
