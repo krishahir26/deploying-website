@@ -16,8 +16,9 @@ function VendorProfileWithShop({ shopId, shopInfo }) {
   // Fetch menu items and extra images
   useEffect(() => {
     if (!shopInfo) return;
-    const menuId = shopInfo.menu_id || null;
-    if (menuId) getMenuItems(menuId).then(setMenuItems).catch(console.error);
+    if (shopInfo.menu_id) {
+      getMenuItems(shopInfo.menu_id).then(setMenuItems).catch(console.error);
+    }
     if (shopInfo.extraImages) setExtraImages(shopInfo.extraImages);
   }, [shopInfo]);
 
@@ -25,18 +26,33 @@ function VendorProfileWithShop({ shopId, shopInfo }) {
   const submitMenuItem = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       if (!shopInfo) throw new Error("Shop info not loaded");
+
       const form = new FormData(e.target);
-      const menuId = shopInfo.menu_id || sha256sum(`${shopId}:menu`);
+      let menuId = shopInfo.menu_id;
+
+      // If first item, generate menuId and update shop
+      if (!menuId) {
+        menuId = sha256sum(`${shopId}:menu`);
+        shopInfo.menu_id = menuId;
+
+        const { error: updateError } = await supabaseClient
+          .from("shops")
+          .update({ menu_id: menuId })
+          .eq("shop_id", shopId);
+        if (updateError) console.error(updateError);
+      }
+
       const itemName = form.get("item-name");
       const itemPrice = parseFloat(form.get("item-price"));
       const itemAvailable = form.get("item-available") === "on";
       const itemNonVeg = form.get("item-non-veg") === "on";
-      const itemTime = parseInt(form.get("item-time"));
-      const itemId = `${shopId}:${itemName}:${Date.now()}`;
+      const itemTime = parseInt(form.get("item-time"), 10);
+      const itemId = crypto.randomUUID();
 
-      const { error } = await supabaseClient.from("menu").insert({
+      const { error: insertError } = await supabaseClient.from("menu").insert({
         menu_id: menuId,
         item_id: itemId,
         item_name: itemName,
@@ -45,15 +61,8 @@ function VendorProfileWithShop({ shopId, shopInfo }) {
         non_veg: itemNonVeg,
         time: itemTime,
       });
-      if (error) throw error;
 
-      if (!shopInfo.menu_id) {
-        const { error: shopError } = await supabaseClient
-          .from("shops")
-          .update({ menu_id: menuId })
-          .eq("shop_id", shopId);
-        if (shopError) console.error(shopError);
-      }
+      if (insertError) throw insertError;
 
       const items = await getMenuItems(menuId);
       setMenuItems(items);
@@ -71,7 +80,8 @@ function VendorProfileWithShop({ shopId, shopInfo }) {
     try {
       const { error } = await supabaseClient.from("menu").delete().eq("item_id", itemId);
       if (error) throw error;
-      if (shopInfo?.menu_id) {
+
+      if (shopInfo.menu_id) {
         const items = await getMenuItems(shopInfo.menu_id);
         setMenuItems(items);
       }
@@ -82,7 +92,7 @@ function VendorProfileWithShop({ shopId, shopInfo }) {
     }
   };
 
-  // Save updated menu item
+  // Save edited menu item
   const saveMenuItem = async (itemId) => {
     setLoading(true);
     try {
@@ -92,7 +102,7 @@ function VendorProfileWithShop({ shopId, shopInfo }) {
         .eq("item_id", itemId);
       if (error) throw error;
 
-      if (shopInfo?.menu_id) {
+      if (shopInfo.menu_id) {
         const items = await getMenuItems(shopInfo.menu_id);
         setMenuItems(items);
       }
@@ -104,6 +114,7 @@ function VendorProfileWithShop({ shopId, shopInfo }) {
     }
   };
 
+  // Handle extra images upload
   const handleExtraImages = (e) => {
     const files = Array.from(e.target.files);
     if (!files.length) return;
@@ -121,11 +132,10 @@ function VendorProfileWithShop({ shopId, shopInfo }) {
     <div className="vendor-profile-with-shop">
       {/* Shop Info */}
       <div className="vendor-shop">
-        <h2>{shopInfo.name || "Shop Name"}</h2>
+        <h2>{shopInfo.name}</h2>
         {shopInfo.iconUrl && <img src={shopInfo.iconUrl} alt="shop icon" width={150} height={150} />}
-        <p>{shopInfo.description || "Shop Description"}</p>
+        <p>{shopInfo.description}</p>
         {shopInfo.bannerUrl && <img src={shopInfo.bannerUrl} alt="shop banner" width={360} height={250} />}
-
         <label>
           Upload Extra Images:
           <input type="file" multiple accept="image/*" onChange={handleExtraImages} />
@@ -137,15 +147,30 @@ function VendorProfileWithShop({ shopId, shopInfo }) {
         </div>
       </div>
 
-      {/* Add Menu Item */}
+      {/* Add Menu Item Form */}
       <div className="vendor-menu-setup">
         <form className="menu-editor" onSubmit={submitMenuItem}>
           <fieldset disabled={loading}>
-            <label>Item Name: <input name="item-name" type="text" required /></label>
-            <label>Price: <input name="item-price" type="number" min="0" required /></label>
-            <label>Available: <input name="item-available" type="checkbox" /></label>
-            <label>Non-Veg: <input name="item-non-veg" type="checkbox" /></label>
-            <label>Prep Time (mins): <input name="item-time" type="number" min="1" max="60" required /></label>
+            <label>
+              Item Name:
+              <input name="item-name" type="text" required />
+            </label>
+            <label>
+              Price:
+              <input name="item-price" type="number" min="0" required />
+            </label>
+            <label>
+              Available:
+              <input name="item-available" type="checkbox" />
+            </label>
+            <label>
+              Non-Veg:
+              <input name="item-non-veg" type="checkbox" />
+            </label>
+            <label>
+              Prep Time (mins):
+              <input name="item-time" type="number" min="1" max="60" required />
+            </label>
             <button type="submit">{loading ? "Submitting..." : "Add Item"}</button>
           </fieldset>
         </form>
@@ -160,14 +185,13 @@ function VendorProfileWithShop({ shopId, shopInfo }) {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-
         {filteredMenuItems.length > 0 ? (
           <table className="menu-table">
             <thead>
               <tr>
                 <th>Item</th>
                 <th>Price</th>
-                <th>Type</th> {/* Veg/Non-Veg column */}
+                <th>Type</th>
                 <th>Available</th>
                 <th>Time (mins)</th>
                 <th>Edit</th>
@@ -180,16 +204,13 @@ function VendorProfileWithShop({ shopId, shopInfo }) {
                   <td>{item.item_name}</td>
                   <td>
                     {editingItemId === item.item_id ? (
-                      <span>
-                        ₹
-                        <input
-                          type="number"
-                          value={editPrice}
-                          min="0"
-                          onChange={(e) => setEditPrice(parseFloat(e.target.value))}
-                          style={{ width: "70px", marginLeft: "5px" }}
-                        />
-                      </span>
+                      <input
+                        type="number"
+                        value={editPrice}
+                        min="0"
+                        onChange={(e) => setEditPrice(parseFloat(e.target.value))}
+                        style={{ width: "70px" }}
+                      />
                     ) : (
                       <>₹{item.price}</>
                     )}
