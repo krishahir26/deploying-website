@@ -147,6 +147,17 @@ export const getShopInfo = async (shopId) => {
     return {...shopData , ...shopImages };
 }
 
+export const getAllShopInfo = async () => {
+    const shops = await getAllShops();
+    if (shops.length === 0) return [];
+    let res = [];
+    for (const shop of shops) {
+        const info = await getShopInfo(shop.shop_id);
+        res.push(info);
+    }
+    return res;
+}
+
 export const getAllVendors = async () => {
     const {data, error} = await supabaseClient
         .from("vendors")
