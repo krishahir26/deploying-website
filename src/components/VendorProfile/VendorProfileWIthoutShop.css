@@ -1,0 +1,186 @@
+/* ------------------------------ Reset & Base --------------------------------*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ------------------------------ Background Overlay --------------------------------*/
+.background-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(135deg, rgba(255, 193, 7, 0.9) 0%, rgba(255, 152, 0, 0.8) 100%),
+    url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  z-index: -1;
+}
+
+/* ------------------------------ Page Title --------------------------------*/
+.page-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+  margin: 2rem 0;
+}
+
+/* ------------------------------ Form Container --------------------------------*/
+.vendor-profile-without-shop,
+.vendor-profile-with-shop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+/* ------------------------------ Shop Setup Card --------------------------------*/
+.shop-setup,
+.menu-editor {
+  background: #fff;
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.shop-setup label,
+.menu-editor label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.shop-setup input[type="text"],
+.shop-setup input[type="number"],
+.shop-setup input[type="file"],
+.menu-editor input[type="text"],
+.menu-editor input[type="number"] {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* ------------------------------ Image Previews --------------------------------*/
+.preview {
+  display: block;
+  margin-top: 0.5rem;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.preview.small {
+  width: 100px;
+  height: 100px;
+}
+
+.preview.banner {
+  width: 100%;
+  max-height: 200px;
+}
+
+/* ------------------------------ Extra Images Grid --------------------------------*/
+.extra-preview-grid {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+/* ------------------------------ Submit Button --------------------------------*/
+button[type="submit"] {
+  background: linear-gradient(135deg, #FFC107 0%, #FF9800 100%);
+  border: none;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255,193,7,0.3);
+}
+
+/* ------------------------------ Loading Text --------------------------------*/
+.loading-text {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* ------------------------------ Vendor Shop Display --------------------------------*/
+.vendor-shop {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.vendor-shop img {
+  border-radius: 12px;
+  margin-top: 0.5rem;
+}
+
+/* ------------------------------ Menu Items --------------------------------*/
+.vendor-menu-items {
+  width: 100%;
+  max-width: 500px;
+  margin-top: 1rem;
+  text-align: left;
+}
+
+.vendor-menu-items div {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* ------------------------------ Responsive --------------------------------*/
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .shop-setup,
+  .menu-editor {
+    padding: 1.5rem;
+  }
+
+  .preview.banner {
+    max-height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 1.6rem;
+  }
+
+  button[type="submit"] {
+    width: 100%;
+  }
+}

@@ -37,15 +37,18 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [searchText]);
 
-  const handleLogout = async () => {
-    try {
-      await supabaseClient.auth.signOut();
-      setProfileOpen(false);
-      navigate("/login", { replace: true });
-    } catch (error) {
-      console.error("Logout failed:", error.message);
-    }
-  };
+ const handleLogout = async () => {
+  const { error } = await supabaseClient.auth.signOut();
+  
+  if (error) {
+    console.error("Logout failed:", error.message);
+    return;
+  }
+
+  setProfileOpen(false);
+  navigate("/login", { replace: true });
+};
+
 
   const hideNavbarRoutes = ["/login", "/vendor-login", "/admin-login"];
   if (hideNavbarRoutes.includes(location.pathname)) return null;

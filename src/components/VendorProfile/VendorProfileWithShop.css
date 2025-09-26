@@ -1,0 +1,265 @@
+/* VendorProfileWithShop.css */
+
+/* Container */
+.vendor-profile-with-shop {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 20px;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+/* Shop Info */
+.vendor-shop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.vendor-shop img {
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.vendor-shop h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.vendor-shop p {
+  font-size: 1.1rem;
+  text-align: center;
+  color: #555;
+}
+
+.extra-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.extra-images img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.2s;
+}
+
+.extra-images img:hover {
+  transform: scale(1.1);
+}
+
+/* Menu Form */
+.vendor-menu-setup {
+  background-color: #fff;
+  padding: 20px;
+  max-width: 600px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.menu-editor label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: #34495e;
+}
+
+.menu-editor input[type="text"],
+.menu-editor input[type="number"],
+.menu-editor input[type="file"] {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 5px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.menu-editor input[type="checkbox"] {
+  transform: scale(1.2);
+  margin-left: 5px;
+}
+
+.menu-editor button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #2ecc71;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.menu-editor button:hover {
+  background-color: #27ae60;
+}
+
+/* Menu Items Section */
+.vendor-menu-items {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.vendor-menu-items h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.vendor-menu-items input[type="text"] {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Table Styling */
+.menu-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+.menu-table th,
+.menu-table td {
+  border: 1px solid #ccc;
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.menu-table th {
+  background-color: #3498db;
+  color: #fff;
+  font-weight: 600;
+}
+
+.menu-table tbody tr:nth-child(even) {
+  background-color: #f2f6fa;
+}
+
+.menu-table tbody tr:hover {
+  background-color: #d1f2eb;
+  transform: scale(1.01);
+}
+
+/* Buttons inside table */
+.menu-table button {
+  padding: 5px 12px;
+  border: none;
+  border-radius: 5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* Edit Button */
+.menu-table .edit-btn {
+  background-color: #f39c12;
+  color: #fff;
+}
+
+.menu-table .edit-btn:hover {
+  background-color: #d68910;
+}
+
+/* Delete Button */
+.menu-table .delete-btn {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.menu-table .delete-btn:hover {
+  background-color: #c0392b;
+}
+
+/* Save / Cancel Buttons */
+.menu-table .save-btn {
+  background-color: #2ecc71;
+  color: #fff;
+}
+
+.menu-table .save-btn:hover {
+  background-color: #27ae60;
+}
+
+.menu-table .cancel-btn {
+  background-color: #95a5a6;
+  color: #fff;
+}
+
+.menu-table .cancel-btn:hover {
+  background-color: #7f8c8d;
+}
+
+/* Edit Mode Inputs inside table */
+.menu-table input[type="number"] {
+  width: 70px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.menu-table input[type="checkbox"] {
+  transform: scale(1.2);
+}
+
+/* Veg/Non-Veg Symbols */
+.veg-symbol {
+  display: inline-block;
+  color: #4CAF50;
+  font-weight: bold;
+  padding: 2px 6px;
+  border: 2px solid #4CAF50;
+  border-radius: 50%;
+  font-size: 0.8rem;
+}
+
+.non-veg-symbol {
+  display: inline-block;
+  color: #e74c3c;
+  font-weight: bold;
+  padding: 2px 6px;
+  border: 2px solid #e74c3c;
+  border-radius: 50%;
+  font-size: 0.8rem;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .vendor-profile-with-shop {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .vendor-shop,
+  .vendor-menu-setup,
+  .vendor-menu-items {
+    flex: 1;
+  }
+
+  .vendor-shop {
+    max-width: 400px;
+  }
+
+  .vendor-menu-setup,
+  .vendor-menu-items {
+    margin-left: 20px;
+  }
+}
