@@ -1,0 +1,109 @@
+.restaurantPage {
+  font-family: "Poppins", sans-serif;
+  color: #333;
+  padding-bottom: 3rem;
+}
+
+/* Banner Section */
+.restaurantBanner {
+  height: 360px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 0 0 24px 24px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+}
+
+.restaurantOverlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5rem;
+}
+
+.restaurantIcon {
+  width: 400px;
+  height: 250px;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 3px solid #fff;
+}
+
+.restaurantTitle {
+  font-size: 2.5rem;   /* ✅ Increased size */
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+}
+
+.restaurantDesc {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #f0f0f0;
+  margin-top: 0.5rem;
+}
+
+/* Gallery Section */
+.restaurantGallery {
+  max-width: 1000px;
+  margin: 2rem auto;
+}
+
+.restaurantGallery h2 {
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.galleryImg {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.galleryImg:hover {
+  transform: scale(1.05);
+}
+
+/* Menu Button */
+.restaurantActions {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.viewMenuBtn {
+  background: #ff6b35;
+  color: white;
+  padding: 14px 32px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.viewMenuBtn:hover {
+  background: #e65c2d;
+  transform: translateY(-3px);
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #777;
+}

@@ -1,33 +1,51 @@
-import "./Restaurants.css"
-import {useEffect, useState} from "react";
-import {getAllShopImages, getAllShopInfo} from "../../utils.js";
+import "./Restaurants.css";
+import { useEffect, useState } from "react";
+import { getAllShopInfo } from "../../utils.js";
+import { Link } from "react-router-dom";
 
 const Restaurants = () => {
-    const [shopInfos, setShopInfos] = useState(undefined);
-    useEffect(() => {
-        if (shopInfos) return;
-        getAllShopInfo().then(res => setShopInfos(res)).catch(console.error);
-    }, []);
-    if (!shopInfos) return (<h1>Loading...</h1>);
-    if (shopInfos.length === 0) {
-        return (
-            <div className="restaurants">
-                No restaurants found!
+  const [shopInfos, setShopInfos] = useState(undefined);
+
+  useEffect(() => {
+    if (shopInfos) return;
+    getAllShopInfo()
+      .then((res) => setShopInfos(res))
+      .catch(console.error);
+  }, [shopInfos]);
+
+  if (!shopInfos) return <h1 className="loading">Loading...</h1>;
+
+  if (shopInfos.length === 0) {
+    return (
+      <div className="restaurants no-data">
+        <h2>No restaurants found!</h2>
+      </div>
+    );
+  }
+
+  return (
+    <div className="restaurants">
+      <h1 className="restaurants-title">Available Restaurants</h1>
+      <div className="restaurants-grid">
+        {shopInfos.map((shop) => (
+          <div className="restaurant-card" key={shop.shop_id}>
+            <div className="restaurant-image">
+              <img src={shop.iconUrl} alt={shop.name} />
+              <div className="restaurant-overlay">
+                <h2 className="restaurant-name">{shop.name}</h2>
+              </div>
             </div>
-        )
-    }
+            <div className="restaurant-content">
+              <p className="restaurant-desc">{shop.description}</p>
+              <Link to={`/restaurants/${shop.shop_id}`} className="view-menu-btn">
+                View Menu
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
-    // todo: use `shopInfos` array to build the tiles
-    // let res = undefined;
-    // for (const info of shopInfos) {
-    //     let img = (<img src={info.iconUrl} alt=""/>);
-    //     console.log(img);
-    //     res += img;
-    //     // res += (<code><pre>{JSON.stringify(info, null, 2)}</pre></code>)
-    //     // todo: build the list of restaurants with pretty tiles
-    //     console.log(info);
-    // }
-    // return res;
-}
-
-export default Restaurants
+export default Restaurants;

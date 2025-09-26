@@ -50,7 +50,7 @@ const Navbar = () => {
 };
 
 
-  const hideNavbarRoutes = ["/login", "/vendor-login", "/admin-login"];
+  const hideNavbarRoutes = ["/login", "/vendor-login", "/admin-login" ];
   if (hideNavbarRoutes.includes(location.pathname)) return null;
 
   return (
